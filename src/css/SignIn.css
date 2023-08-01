@@ -18,12 +18,16 @@
 
 .sub_div {
     width: 30%;
-    height: 50vh;
+    height: auto;
     margin-right: 5%;
     margin-top: 10%;
     background-color: #fff;
     border-radius: 4px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .img_head {
@@ -48,4 +52,5 @@ h2 {
 
 .login_btn {
     padding: 8px 30px;
+    margin: 20px auto;
 }
