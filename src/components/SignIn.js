@@ -8,7 +8,7 @@ const SignIn = () => {
     const handleSubmit = (e) => {
         console.log("clicked");
         e.preventDefault();
-        alert(`The name you entered was: ${email}`);
+        localStorage.setItem("email", email);
         navTo("/home");
     }
     return (
@@ -16,12 +16,13 @@ const SignIn = () => {
             <form onSubmit={handleSubmit}>
                 <div className="main_div">
                     <div className='sub_div'>
-                        <img className="img_head text-center" src="/images/logo.png" alt="logo" />
-                        <h2 className='text-center'>Sign In</h2>
-                        <input type='email' placeholder='Enter your email' className='input_box' value={email} onChange={(event) => {
+                        <img className="img_head text-center mb-3 mt-3" src="/images/logo.png" alt="logo" />
+                        <h2 className="fw-bold mb-3 text-uppercase">LOGIN</h2>
+                        <p className="text-black-50 mb-3">Please enter your email</p>
+                        <input type='email' placeholder='Email' className='input_box mb-3' value={email} onChange={(event) => {
                             setEmail(event.target.value)
                         }} required />
-                        <button type="submit" className='login_btn btn btn-primary'>login</button>
+                        <button type="submit" className='btn btn-primary mb-3 text-uppercase'>sign in</button>
                     </div>
                 </div>
             </form>
