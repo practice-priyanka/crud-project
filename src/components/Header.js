@@ -21,11 +21,11 @@ const Header = () => {
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#sd" role="button" aria-haspopup="true" aria-expanded="false">Pool Emp Status Tracker</a>
                                 <div className="dropdown-menu">
-                                    <a className="dropdown-item" href="#sds">Action</a>
-                                    <a className="dropdown-item" href="#sd">Another action</a>
-                                    <a className="dropdown-item" href="#sd">Something else here</a>
+                                    <a className="dropdown-item" href="#sds">In pool</a>
+                                    <a className="dropdown-item" href="#sd">Assigned project</a>
+                                    <a className="dropdown-item" href="#sd">Doing POC</a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#d">Separated link</a>
+                                    {/* <a className="dropdown-item" href="#d">Separated link</a> */}
                                 </div>
                             </li>
                         </ul>

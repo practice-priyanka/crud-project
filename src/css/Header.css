@@ -2,11 +2,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1)); */
 }
 img {
     width: 10%;
-    height: 10%;
-    background: transparent;
+    /* height: 3%;     */
+    /* background: transparent; */
 }
 
 .dropdown{
@@ -18,14 +19,23 @@ img {
     /* flex-direction: row; */
 }
 .profile_img{
-    width:30px;
-    height: 30px;
+    width:2rem;
+   border-radius: 1rem;
 }
 .logout{
-    border-radius: 25px;
+    border-radius: 2rem;
+    font-size: 0.8rem;
     background-image: linear-gradient(90deg,#4776e6 0,#8e54e9 51%,#4776e6);
 }
 .img_div {
     cursor: pointer;
+}
+
+.header_div {
+    background-image: linear-gradient(90deg,#6abf91 0,#22c1c3);
+    
+}
+.nav-link {
+    color: white !important
 }
 
