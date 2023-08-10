@@ -1,7 +1,10 @@
 
 import empDetails from '../db.json';
-
+import {useDispatch} from 'react-redux';
 const Table = () => {
+    const dispatch = new useDispatch();
+
+    dispatch({type: "ADD_EMP", payload: empDetails});
     return (
         <>
             <div className='p-5'>

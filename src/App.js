@@ -7,6 +7,7 @@ import AddStatus from './components/AddStatus';
 import EmpDetails from './components/EmpDetails';
 import Update from './components/Update';
 import Delete from './components/Delete';
+import PageNotFound from './components/PageNotFound';
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
         <Route exact path="/update" element={<Update />}></Route>
         <Route exact path="/delete" element={<Delete />}></Route>
         <Route exact path="/employee" element={<EmpDetails />}></Route>
-
+        <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
     </BrowserRouter>
   );

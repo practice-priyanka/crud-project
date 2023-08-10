@@ -1,46 +1,57 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faRemove } from '@fortawesome/free-solid-svg-icons';
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getAllEmployees } from "../redux/Employees/employeeSlice";
+import '../css/EmpDetails.css';
+import Delete from "./Delete";
+import {getEmployees} from "../services/FetchEmployee";
+import { useDispatch } from 'react-redux';
+import { addEmployee } from '../redux/Employees/employeeSlice'
 
 const EmpDetails = () => {
-    const [response, setResponse] = useState([]);
-    const navTo = useNavigate();
+    const [id, setId] = useState(null);
+    const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
+    const [deleteMessage, setDeleteMessage] = useState(null);
+    const dispatch = useDispatch();
+    const employees = useSelector(getAllEmployees);
     // call when component mounted
     useEffect(() => {
-        axios.get("https://64c38ddd67cfdca3b65fdffd.mockapi.io/api/poc-crud")
-            .then((res) => {
-                console.log(response)
-                setResponse(res.data);
-            });
+        (async () => {
+           let data = await getEmployees();
+           dispatch(addEmployee(data));
+        })()
     }, []);
 
     const handleEdit = (data) => {
-        console.log('data', data);
-let { id, date, skill,status }= data;
-// const newDate = date.toLocaleDateString();
-//   console.log(date.toLocaleDateString());
+        let { id, name, date, skill, status } = data;
         localStorage.setItem("id", id);
+        localStorage.setItem("name", name);
         localStorage.setItem("date", date);
         localStorage.setItem("skill", skill);
         localStorage.setItem("status", status);
-        console.log('date', date, skill, status);
     };
 
     const handleDelete = (id) => {
-        navTo("/delete");
+        setId(id);
+        setDeleteMessage(`Are you sure you want to delete the employee ${id}`);
+        setDisplayConfirmationModal(true);
     };
+
+    const hideConfirmationModal = (status) => {
+        setDisplayConfirmationModal(status);
+    }
 
     return (
         <>
-            <div className="p-5">
-                <h3 className="text-center p-3 bg-primary bg-gradient text-white rounded-5 mb-5">Employee Daily Status Updates</h3>
-                <table className="table table-striped table-hover border-primary">
-                    <thead>
+            <div className="p-5 table_div">
+                <h3 className="text-center p-3 rounded-5 mb-2">Employee Daily Status Updates</h3>
+                <table className="table table-striped p-3 table-responsive">
+                    <thead className="bg-dark text-white">
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Name</th>
                             <th scope="col">Date</th>
                             <th scope="col">Skill</th>
                             <th scope="col">Status</th>
@@ -48,31 +59,35 @@ let { id, date, skill,status }= data;
                         </tr>
                     </thead>
                     {
-                        response.map((value, key) => {
+                        employees.map((value, key) => {
                             return (
-                            
-                                    <tbody key={key}>
-                                        <tr>
-                                            <th scope="row">{value.id}</th>
-                                            <td>{value.date}</td>
-                                            <td>{value.skill}</td>
-                                            <td>{value.status}</td>
-                                            <td>
-                                                <Link to="/update">
-                                                    <FontAwesomeIcon className='me-4' icon={faPenToSquare} onClick={() => {
-                                                        handleEdit(value)
-                                                    }} />
-                                                </Link>
-                                                {/* <Link to="/delete"></Link> */}
-                                                <FontAwesomeIcon icon={faRemove} style={{color: 'red'}} onClick={() => handleDelete(value.id)} />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                
+
+                                <tbody key={key} className="bg-white text-black">
+                                    <tr>
+                                        <th scope="row">{value.id}</th>
+                                        <td>{value.name}</td>
+                                        <td>{value.date}</td>
+                                        <td>{value.skill}</td>
+                                        <td>{value.status}</td>
+                                        <td>
+                                            <Link to="/update">
+                                                <FontAwesomeIcon className='me-4' icon={faPenToSquare} onClick={() => {
+                                                    handleEdit(value)
+                                                }} />
+                                            </Link>
+
+                                            <FontAwesomeIcon icon={faRemove} style={{ color: 'red' }} onClick={() => {
+                                                handleDelete(value.id)
+                                            }} />
+
+                                        </td>
+                                    </tr>
+                                </tbody>
                             )
                         })
                     }
                 </table>
+                <Delete showModal={displayConfirmationModal} confirmModal={handleDelete} hideModal={hideConfirmationModal} id={id} message={deleteMessage} />
             </div>
         </>
     )
